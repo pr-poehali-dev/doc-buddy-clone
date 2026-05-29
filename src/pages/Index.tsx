@@ -506,7 +506,7 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
               Бесплатно · Без регистрации · Данные не покидают браузер
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-black text-[#0e1a2e] leading-tight mb-6 animate-fade-in animate-delay-100 opacity-0-init">
+            <h1 className="text-5xl md:text-6xl text-[#0e1a2e] leading-tight mb-6 animate-fade-in animate-delay-100 opacity-0-init font-bold">
               Документы для сайта<br />
               <span className="text-gradient">по 152-ФЗ</span><br />
               <span className="font-serif italic font-normal text-4xl md:text-5xl text-gray-500">за 5 минут</span>
