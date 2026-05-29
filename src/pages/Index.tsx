@@ -1059,6 +1059,42 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
             </div>
           </div>
 
+          <div className="bg-white rounded-3xl p-8 mb-8 border border-gray-100">
+            <h2 className="text-2xl font-black text-[#0e1a2e] mb-2">Разработчик сервиса</h2>
+            <p className="text-gray-500 mb-6">
+              Сервис разработал{" "}
+              <a href="https://vladimir-kozlov.ru" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#1a4fd6] hover:underline">
+                Мр.Владимир
+              </a>
+              . Связаться можно по любому из контактов ниже.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                { href: "https://vladimir-kozlov.ru", icon: "Globe", title: "Сайт", value: "vladimir-kozlov.ru" },
+                { href: "https://vk.ru/vladimir_kozlove", icon: "Users", title: "ВКонтакте", value: "vk.ru/vladimir_kozlove" },
+                { href: "https://vk.cc/cPdh5I", icon: "MessageCircle", title: "МАКС", value: "Перейти" },
+                { href: "https://t.me/vladimir_kozlove", icon: "Send", title: "Телеграм", value: "@vladimir_kozlove" },
+                { href: "mailto:vladimirkozlove@yandex.ru", icon: "Mail", title: "Почта", value: "vladimirkozlove@yandex.ru" },
+              ].map((s) => (
+                <a
+                  key={s.title}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl border border-gray-200 hover:border-[#1a4fd6] hover:bg-blue-50 transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 group-hover:bg-white transition-colors">
+                    <Icon name={s.icon} size={18} className="text-[#1a4fd6]" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs text-gray-400">{s.title}</p>
+                    <p className="text-sm font-semibold text-[#0e1a2e] truncate">{s.value}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
           <div className="text-center">
             <p className="text-gray-500 mb-6">Готовы создать документы для вашего сайта?</p>
             <button
@@ -1087,6 +1123,35 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
           <div className="flex items-center gap-1 text-xs text-gray-400">
             <Icon name="Lock" size={11} />
             Данные не передаются
+          </div>
+        </div>
+        <div className="border-t border-gray-100">
+          <div className="max-w-6xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-gray-500 text-center">
+              Сервис разработал{" "}
+              <a href="https://vladimir-kozlov.ru" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#1a4fd6] hover:underline">
+                Мр.Владимир
+              </a>
+            </p>
+            <div className="flex items-center gap-2">
+              {[
+                { href: "https://vk.ru/vladimir_kozlove", icon: "Users", title: "ВКонтакте" },
+                { href: "https://vk.cc/cPdh5I", icon: "MessageCircle", title: "МАКС" },
+                { href: "https://t.me/vladimir_kozlove", icon: "Send", title: "Телеграм" },
+                { href: "mailto:vladimirkozlove@yandex.ru", icon: "Mail", title: "Почта" },
+              ].map((s) => (
+                <a
+                  key={s.title}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={s.title}
+                  className="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:text-[#1a4fd6] hover:border-[#1a4fd6] hover:bg-blue-50 transition-all"
+                >
+                  <Icon name={s.icon} size={16} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </footer>
