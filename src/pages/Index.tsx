@@ -135,6 +135,7 @@ export default function Index() {
   const [selectedDocs, setSelectedDocs] = useState<string[]>(["privacy", "consentForms"]);
   const [form, setForm] = useState<FormData>(defaultForm);
   const [generated, setGenerated] = useState(false);
+  const [previewDoc, setPreviewDoc] = useState<string | null>(null);
 
   const toggleDoc = (id: string) => {
     setSelectedDocs((prev) =>
@@ -854,6 +855,13 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
                       <p className="font-semibold text-[#0e1a2e]">{doc.label}</p>
                       {doc.required && <span className="text-xs text-[#1a4fd6] font-medium">Обязательный документ по 152-ФЗ</span>}
                     </div>
+                    <button
+                      onClick={(e) => { e.preventDefault(); setPreviewDoc(doc.id); }}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[#1a4fd6] hover:bg-blue-100 transition-all flex-shrink-0"
+                    >
+                      <Icon name="Eye" size={14} />
+                      Просмотр
+                    </button>
                     <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all ${
                       selectedDocs.includes(doc.id) ? "bg-[#1a4fd6] border-[#1a4fd6]" : "border-gray-300"
                     }`}>
@@ -926,6 +934,13 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
                         <p className="font-semibold text-[#0e1a2e] text-sm">{doc.label}</p>
                       </div>
                       <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => setPreviewDoc(id)}
+                          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all border border-gray-200 text-[#0e1a2e] hover:border-[#1a4fd6] hover:bg-blue-50 bg-white"
+                        >
+                          <Icon name="Eye" size={12} className="text-[#1a4fd6]" />
+                          Предпросмотр
+                        </button>
                         {(["docx", "pdf", "txt"] as const).map((fmt) => (
                           <button
                             key={fmt}
@@ -948,7 +963,24 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
                 })}
               </div>
 
-              <div className="mt-6 flex justify-between items-center">
+              <div className="mt-6 flex flex-wrap gap-3 mb-4">
+                <button
+                  onClick={() => { setGenerated(false); setStep(1); }}
+                  className="flex items-center gap-2 text-gray-600 hover:text-[#0e1a2e] font-medium px-4 py-2.5 rounded-xl border border-gray-200 hover:border-gray-300 transition-all bg-white text-sm"
+                >
+                  <Icon name="ArrowLeft" size={15} />
+                  Изменить данные
+                </button>
+                <button
+                  onClick={() => { setGenerated(false); setStep(2); }}
+                  className="flex items-center gap-2 text-gray-600 hover:text-[#0e1a2e] font-medium px-4 py-2.5 rounded-xl border border-gray-200 hover:border-gray-300 transition-all bg-white text-sm"
+                >
+                  <Icon name="ListChecks" size={15} />
+                  Изменить документы
+                </button>
+              </div>
+
+              <div className="flex justify-between items-center">
                 <button
                   onClick={() => { setStep(1); setGenerated(false); setForm(defaultForm); }}
                   className="text-sm text-gray-500 hover:text-[#1a4fd6] font-medium transition-colors"
@@ -1058,6 +1090,49 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
           </div>
         </div>
       </footer>
+
+      {/* PREVIEW MODAL */}
+      {previewDoc && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in"
+          onClick={() => setPreviewDoc(null)}
+        >
+          <div
+            className="bg-white rounded-2xl w-full max-w-3xl max-h-[85vh] flex flex-col shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-4 px-6 py-4 border-b border-gray-100">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+                  <Icon name={DOCS.find((d) => d.id === previewDoc)?.icon || "FileText"} size={17} className="text-[#1a4fd6]" />
+                </div>
+                <p className="font-semibold text-[#0e1a2e] text-sm truncate">{DOCS.find((d) => d.id === previewDoc)?.label}</p>
+              </div>
+              <button
+                onClick={() => setPreviewDoc(null)}
+                className="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center flex-shrink-0 transition-colors"
+              >
+                <Icon name="X" size={18} className="text-gray-500" />
+              </button>
+            </div>
+            <div className="overflow-y-auto px-6 py-5 flex-1">
+              <pre className="whitespace-pre-wrap font-sans text-sm text-[#0e1a2e] leading-relaxed">{generateDocContent(previewDoc)}</pre>
+            </div>
+            <div className="flex flex-wrap gap-2 px-6 py-4 border-t border-gray-100">
+              {(["docx", "pdf", "txt"] as const).map((fmt) => (
+                <button
+                  key={fmt}
+                  onClick={() => downloadDoc(previewDoc, fmt)}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all border border-gray-200 text-[#0e1a2e] hover:border-[#1a4fd6] hover:bg-blue-50 bg-white"
+                >
+                  <Icon name="Download" size={12} className="text-[#1a4fd6]" />
+                  Скачать .{fmt.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
