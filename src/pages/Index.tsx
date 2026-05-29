@@ -87,12 +87,7 @@ const FAQ = [
   },
 ];
 
-export default function Index() {
-  const [section, setSection] = useState<Section>("home");
-  const [step, setStep] = useState(1);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [selectedDocs, setSelectedDocs] = useState<string[]>(["privacy", "consentForms"]);
-  const [form, setForm] = useState<FormData>({
+const defaultForm: FormData = {
     companyName: "",
     companyType: "юридическое лицо",
     website: "",
@@ -108,30 +103,37 @@ export default function Index() {
     hasMailing: false,
     hasPublishing: false,
     hasAccount: false,
-    thirdParties: "",
-    retentionPeriod: "",
+    thirdParties: "Хостинг-провайдер, сервис веб-аналитики, CRM-система",
+    retentionPeriod: "3 года или до отзыва согласия",
     formData: "Имя, телефон, email",
     analyticsServices: "Яндекс.Метрика, cookie",
-    contractData: "",
-    accountData: "",
-    paymentData: "",
-    deliveryData: "",
-    mailingDataList: "",
-    securityMeasures: "",
-    crossBorder: "",
-    cookieMechanism: "",
-    policyLink: "",
-    consentPurposes: "",
-    mailingChannels: "",
-    mailingMessageTypes: "",
-    distributionPurpose: "",
-    distributionData: "",
-    distributionConditions: "",
-    agreementPurpose: "",
-    accountOrder: "",
-    orderPayment: "",
-    liability: "",
-  });
+    contractData: "ФИО, телефон, email, адрес доставки, состав заказа",
+    accountData: "Имя, email, телефон, логин, история заказов",
+    paymentData: "ФИО, email, телефон, сумма и состав заказа",
+    deliveryData: "ФИО, телефон, адрес доставки",
+    mailingDataList: "Имя, email, телефон",
+    securityMeasures: "Разграничение доступа, пароли, HTTPS, резервное копирование, договоры с обработчиками, антивирусная защита",
+    crossBorder: "Зарубежные сервисы не используются",
+    cookieMechanism: "Кнопка «Настройки cookie» в баннере сайта",
+    policyLink: "Размещена в футере сайта",
+    consentPurposes: "Обработка заявки/обращения, обратная связь, подготовка предложения, заключение и исполнение договора",
+    mailingChannels: "Email, SMS, мессенджеры, push-уведомления",
+    mailingMessageTypes: "Новости, акции, специальные предложения, промокоды, информация о товарах и услугах",
+    distributionPurpose: "Размещение отзыва, кейса, фото на сайте",
+    distributionData: "ФИО, должность, компания, фото, текст отзыва",
+    distributionConditions: "Не установлены",
+    agreementPurpose: "Публичная оферта",
+    accountOrder: "Пользователь регистрируется по email и паролю, может удалить аккаунт через обращение в поддержку",
+    orderPayment: "Заказ оформляется на сайте, оплата онлайн, сроки и порядок доставки указаны в карточке товара, возврат по законодательству РФ",
+    liability: "Сайт предоставляется «как есть». Оператор не несёт ответственности за перебои в работе по техническим причинам и действия третьих лиц, не нарушая права потребителей",
+};
+
+export default function Index() {
+  const [section, setSection] = useState<Section>("home");
+  const [step, setStep] = useState(1);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [selectedDocs, setSelectedDocs] = useState<string[]>(["privacy", "consentForms"]);
+  const [form, setForm] = useState<FormData>(defaultForm);
   const [generated, setGenerated] = useState(false);
 
   const toggleDoc = (id: string) => {
@@ -948,7 +950,7 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
 
               <div className="mt-6 flex justify-between items-center">
                 <button
-                  onClick={() => { setStep(1); setGenerated(false); setForm({ companyName: "", companyType: "юридическое лицо", website: "", email: "", phone: "", address: "", inn: "", ogrn: "", hasAnalytics: true, hasPayments: false, hasCookies: true, hasFeedbackForm: true, hasMailing: false, hasPublishing: false, hasAccount: false, thirdParties: "", retentionPeriod: "", formData: "Имя, телефон, email", analyticsServices: "Яндекс.Метрика, cookie" }); }}
+                  onClick={() => { setStep(1); setGenerated(false); setForm(defaultForm); }}
                   className="text-sm text-gray-500 hover:text-[#1a4fd6] font-medium transition-colors"
                 >
                   ← Создать новый пакет
