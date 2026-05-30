@@ -874,7 +874,7 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
                 {DOCS.map((doc) => (
                   <label
                     key={doc.id}
-                    className={`flex items-center gap-4 p-4 rounded-2xl border cursor-pointer transition-all ${
+                    className={`flex items-start gap-3 p-4 rounded-2xl border cursor-pointer transition-all ${
                       selectedDocs.includes(doc.id)
                         ? "border-[#1a4fd6] bg-blue-50"
                         : "border-gray-200 bg-white hover:border-gray-300"
@@ -886,26 +886,31 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
                       onChange={() => toggleDoc(doc.id)}
                       className="sr-only"
                     />
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                      selectedDocs.includes(doc.id) ? "bg-[#1a4fd6]" : "bg-gray-100"
-                    }`}>
-                      <Icon name={doc.icon} size={18} className={selectedDocs.includes(doc.id) ? "text-white" : "text-gray-400"} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-semibold text-[#0e1a2e]">{doc.label}</p>
-                      {doc.required && <span className="text-xs text-[#1a4fd6] font-medium">Обязательный документ по 152-ФЗ</span>}
-                    </div>
-                    <button
-                      onClick={(e) => { e.preventDefault(); setPreviewDoc(doc.id); }}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[#1a4fd6] hover:bg-blue-100 transition-all flex-shrink-0"
-                    >
-                      <Icon name="Eye" size={14} />
-                      Просмотр
-                    </button>
-                    <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all ${
+                    {/* Checkbox */}
+                    <div className={`w-5 h-5 mt-0.5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all ${
                       selectedDocs.includes(doc.id) ? "bg-[#1a4fd6] border-[#1a4fd6]" : "border-gray-300"
                     }`}>
                       {selectedDocs.includes(doc.id) && <Icon name="Check" size={12} className="text-white" />}
+                    </div>
+                    {/* Icon */}
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                      selectedDocs.includes(doc.id) ? "bg-[#1a4fd6]" : "bg-gray-100"
+                    }`}>
+                      <Icon name={doc.icon} size={16} className={selectedDocs.includes(doc.id) ? "text-white" : "text-gray-400"} />
+                    </div>
+                    {/* Text */}
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-[#0e1a2e] text-sm leading-snug">{doc.label}</p>
+                      <div className="flex flex-wrap items-center gap-2 mt-1">
+                        {doc.required && <span className="text-xs text-[#1a4fd6] font-medium">Обязательный по 152-ФЗ</span>}
+                        <button
+                          onClick={(e) => { e.preventDefault(); setPreviewDoc(doc.id); }}
+                          className="flex items-center gap-1 text-xs font-semibold text-gray-400 hover:text-[#1a4fd6] transition-all"
+                        >
+                          <Icon name="Eye" size={12} />
+                          Просмотр
+                        </button>
+                      </div>
                     </div>
                   </label>
                 ))}
