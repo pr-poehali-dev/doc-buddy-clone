@@ -576,7 +576,7 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
 
           {/* DOCS PREVIEW */}
           <section className="max-w-6xl mx-auto px-6 pb-16">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {DOCS.map((doc, i) => (
                 <div
                   key={doc.id}
@@ -588,7 +588,7 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
                     <Icon name={doc.icon} size={20} className="text-[#1a4fd6]" />
                   </div>
                   <div>
-                    <p className="font-semibold text-[#0e1a2e] text-sm leading-tight">{doc.label}</p>
+                    <p className="font-semibold text-[#0e1a2e] leading-tight text-sm">{doc.label}</p>
                     {doc.required && (
                       <span className="text-[10px] text-[#1a4fd6] font-semibold bg-blue-50 px-2 py-0.5 rounded-full mt-1 inline-block">Обязательно</span>
                     )}
