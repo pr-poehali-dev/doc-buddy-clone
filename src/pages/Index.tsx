@@ -660,7 +660,7 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
                 Начните прямо сейчас — это бесплатно
               </h2>
               <p className="text-blue-200 mb-8 relative">Регистрация не нужна. Данные остаются в вашем браузере.</p>
-              <button
+              <button className="bg-white text-[#1a4fd6] font-bold py-4 rounded-xl hover:bg-blue-50 transition-all hover:scale-105 relative px-4"
                 onClick={() => setSection("generator")}
                 className="bg-white text-[#1a4fd6] font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-all hover:scale-105 relative"
               >
