@@ -461,13 +461,24 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
   ];
   const detailFields = allDetailFields.filter((f) => f.show);
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navItems = (["home", "generator", "about"] as Section[]);
+  const navLabel = (s: Section) => s === "home" ? "Главная" : s === "generator" ? "Генератор" : "О сервисе";
+
+  const handleNav = (s: Section) => {
+    setSection(s);
+    if (s === "generator") { setStep(1); setGenerated(false); }
+    setMobileMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-mesh font-sans">
       {/* NAV */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <button
-            onClick={() => setSection("home")}
+            onClick={() => handleNav("home")}
             className="flex items-center gap-2 group"
           >
             <div className="w-8 h-8 rounded-lg bg-[#1a4fd6] flex items-center justify-center">
@@ -478,22 +489,51 @@ ${ph("ПОРЯДОК ИЗМЕНЕНИЯ УСЛОВИЙ И УВЕДОМЛЕНИЯ
             </span>
           </button>
 
-          <div className="flex items-center gap-1">
-            {(["home", "generator", "about"] as Section[]).map((s) => (
+          {/* Desktop menu */}
+          <div className="hidden md:flex items-center gap-1">
+            {navItems.map((s) => (
               <button
                 key={s}
-                onClick={() => { setSection(s); if (s === "generator") { setStep(1); setGenerated(false); } }}
+                onClick={() => handleNav(s)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   section === s
                     ? "bg-[#1a4fd6] text-white"
                     : "text-gray-500 hover:text-[#0e1a2e] hover:bg-gray-50"
                 }`}
               >
-                {s === "home" ? "Главная" : s === "generator" ? "Генератор" : "О сервисе"}
+                {navLabel(s)}
               </button>
             ))}
           </div>
+
+          {/* Burger button */}
+          <button
+            className="md:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-all"
+            onClick={() => setMobileMenuOpen((v) => !v)}
+            aria-label="Меню"
+          >
+            <Icon name={mobileMenuOpen ? "X" : "Menu"} size={22} />
+          </button>
         </div>
+
+        {/* Mobile dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-md px-4 py-3 flex flex-col gap-1">
+            {navItems.map((s) => (
+              <button
+                key={s}
+                onClick={() => handleNav(s)}
+                className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                  section === s
+                    ? "bg-[#1a4fd6] text-white"
+                    : "text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                {navLabel(s)}
+              </button>
+            ))}
+          </div>
+        )}
       </nav>
 
       {/* === HOME === */}
